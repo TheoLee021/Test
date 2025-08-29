@@ -1,0 +1,142 @@
+# 헤어스타일 적용 웹사이트 프로젝트 - Cursor Rules
+
+## 프로젝트 개요
+- **목표**: 얼굴사진에 헤어스타일 참고사진의 스타일을 적용하는 웹사이트
+- **핵심 기술**: React + Node.js/Express + Gemini 2.5 Flash API
+- **아키텍처**: 프론트엔드(React) + 백엔드(Express) + AI(Gemini)
+
+## 개발 우선순위 및 단계
+Phase 1 → Phase 2 → Phase 3 → Phase 4 → Phase 5 → Phase 6 순서로 진행
+각 Phase는 독립적으로 테스트 가능해야 함
+
+## 코딩 스타일 및 규칙
+
+### 일반 원칙
+- TypeScript 사용 (프론트엔드), JavaScript ES6+ 사용 (백엔드)
+- 함수형 프로그래밍 스타일 선호
+- 명확하고 의미있는 변수/함수명 사용
+- 주석으로 복잡한 로직 설명
+
+### 파일 구조
+```
+project-root/
+├── frontend/          # React 앱
+│   ├── src/
+│   │   ├── components/   # 재사용 가능한 컴포넌트
+│   │   ├── hooks/        # 커스텀 훅
+│   │   ├── services/     # API 호출 로직
+│   │   └── utils/        # 유틸리티 함수
+├── backend/           # Express 서버
+│   ├── src/
+│   │   ├── routes/       # API 라우트
+│   │   ├── services/     # 비즈니스 로직
+│   │   ├── middleware/   # 미들웨어
+│   │   └── utils/        # 유틸리티 함수
+├── uploads/           # 임시 파일 저장
+└── .env               # 환경변수
+```
+
+### 네이밍 컨벤션
+- **컴포넌트**: PascalCase (ImageUploader, ResultDisplay)
+- **함수/변수**: camelCase (processImage, faceImagePath)
+- **상수**: UPPER_SNAKE_CASE (MAX_FILE_SIZE, GEMINI_API_KEY)
+- **파일명**: kebab-case (image-processor.js, upload-handler.js)
+
+## 기술별 구현 가이드라인
+
+### React (프론트엔드)
+- 함수형 컴포넌트 + Hooks 사용
+- useState, useEffect, useCallback 적극 활용
+- 컴포넌트는 단일 책임 원칙 준수
+- 에러 바운더리 구현으로 에러 처리
+- 이미지 업로드: File API + FormData 사용
+
+### Express (백엔드)
+- RESTful API 설계
+- Multer로 파일 업로드 처리
+- Sharp로 이미지 전처리/후처리
+- 미들웨어 패턴으로 공통 로직 분리
+- 환경변수로 설정 관리
+
+### 이미지 처리
+- 입력 이미지: 1024x1024로 정규화
+- 지원 포맷: JPEG, PNG
+- 파일 크기 제한: 10MB
+- Sharp 사용으로 고품질 변환
+
+### Gemini API
+- 환경변수로 API 키 관리
+- 재시도 로직 구현 (3회)
+- 타임아웃 설정 (30초)
+- 적절한 프롬프트 엔지니어링
+
+## 에러 처리 및 로깅
+
+### 에러 처리
+- try-catch 블록으로 예외 처리
+- 사용자 친화적 에러 메시지
+- HTTP 상태 코드 적절히 사용
+- 프론트엔드에서 에러 상태 표시
+
+### 로깅
+- console.log 대신 적절한 로깅 레벨 사용
+- 에러 발생 시 스택 트레이스 포함
+- API 호출 시 요청/응답 로깅
+
+## 성능 최적화
+
+### 프론트엔드
+- 이미지 미리보기 최적화
+- 로딩 상태 표시
+- debounce 적용 (필요시)
+- React.memo로 불필요한 리렌더링 방지
+
+### 백엔드
+- 이미지 스트리밍 처리
+- 임시 파일 정리
+- 메모리 사용량 모니터링
+- API 응답 캐싱 (필요시)
+
+## 보안 고려사항
+- 파일 타입 검증 (이미지만 허용)
+- 파일 크기 제한
+- API 키 노출 방지
+- CORS 설정
+- 업로드된 파일 스캔
+
+## 테스트 가이드라인
+- 각 Phase 완료 후 즉시 테스트
+- Postman으로 API 테스트
+- 브라우저에서 UI/UX 테스트
+- 다양한 이미지 포맷으로 테스트
+- 에러 케이스 테스트
+
+## 코드 작성 시 주의사항
+
+### 반드시 포함해야 할 것
+- 환경변수 검증
+- 파일 업로드 검증
+- API 응답 에러 처리
+- 메모리 누수 방지
+- 임시 파일 정리
+
+### 피해야 할 것
+- 하드코딩된 설정값
+- 동기식 파일 처리
+- 무한 루프 가능성
+- 메모리 누수
+- API 키 노출
+
+## 개발 팁
+- Phase별로 작은 단위로 개발
+- 각 기능별로 즉시 테스트
+- 문제 발생 시 Phase 단위로 롤백
+- 코드 리뷰 시 성능과 보안 중점 확인
+- README 및 API 문서 작성
+
+## 배포 준비
+- 환경변수 설정 확인
+- 프로덕션 빌드 테스트
+- 보안 설정 점검
+- 성능 최적화 확인
+- 에러 모니터링 설정
