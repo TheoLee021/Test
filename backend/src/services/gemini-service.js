@@ -32,7 +32,7 @@ class GeminiService {
       const startTime = Date.now();
       
       const prompt = [
-        { text: "Take the first image of the person. Add the hairstyle from the second image to the person. Ensure the person's face and features remain completely unchanged." },
+        { text: "Take the first image of the person. Analyze the hairstyle of the second image. Change the hairstyle of the person to the hairstyle of the second image. Ensure the person's face and features remain completely unchanged." },
         {
           inlineData: {
             mimeType: "image/jpeg",
